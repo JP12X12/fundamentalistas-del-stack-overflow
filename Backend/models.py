@@ -30,7 +30,7 @@ class Habitacion(db.Model):
     cant_personas = db.Column(db.Integer, nullable=False)
     service = db.Column(db.String(15), nullable=False)
     precio_dia = db.Column(db.Integer, nullable=False)
-    estado = db.Column(db.String(50), nullable=False)
+    estado = db.Column(db.Boolean, default=False)
 
 class Reserva(db.Model):
     __tablename__ = 'reservas'
