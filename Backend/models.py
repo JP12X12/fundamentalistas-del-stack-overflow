@@ -5,38 +5,39 @@ db = SQLAlchemy()
 
 class Cliente(db.Model):
     __tablename__ = 'clientes'
-    id = db.column(db.integer, primary_key=True)
-    nombre = db.column(db.string(50), nullable=False)
-    apellido = db.column(db.string(50), nullable=False)
-    DNI = db.column(db.integer, nullable=False)
-    telefono = db.column(db.integer, nullable=False)
-    cant_dias = db.column(db.integer, nullable=False)
-    edad = db.column(db.integer, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), nullable=False)
+    apellido = db.Column(db.String(50), nullable=False)
+    DNI = db.Column(db.Integer, nullable=False)
+    telefono = db.Column(db.Integer, nullable=False)
+    cant_dias = db.Column(db.Integer, nullable=False)
+    edad = db.Column(db.Integer, nullable=False)
 
 class Hotel(db.Model):
     __tablename__ = 'hoteles'
-    id = db.column(db.integer, primary_key=True)
-    nombre = db.column(db.string(50), nullable=False)
-    estrellas = db.column(db.integer, nullable=False)
-    pisos = db.column(db.integer, nullable=False)
-    ubicacion = db.column(db.string(100), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), nullable=False)
+    estrellas = db.Column(db.Integer, nullable=False)
+    pisos = db.Column(db.Integer, nullable=False)
+    ubicacion = db.Column(db.String(100), nullable=False)
+    habitaciones = db.relationship("Habitacion")
 
 class Habitacion(db.Model):
     __tablename__ = 'habitaciones'
-    id = db.column(db.integer, primary_key=True)
-    hotel_id = db.column(db.integer, db.foreignkey('hoteles.id'))
-    numero = db.column(db.integer, nullable=False)
-    cant_personas = db.column(db.integer, nullable=False)
-    service = db.column(db.string(15), nullable=False)
-    precio_dia = db.column(db.integer, nullable=False)
-    estado = db.column(db.string(50), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    hotel_id = db.Column(db.Integer, db.ForeignKey('hoteles.id'))
+    numero = db.Column(db.Integer, nullable=False)
+    cant_personas = db.Column(db.Integer, nullable=False)
+    service = db.Column(db.String(15), nullable=False)
+    precio_dia = db.Column(db.Integer, nullable=False)
+    estado = db.Column(db.String(50), nullable=False)
 
-class reserva(db.Model):
+class Reserva(db.Model):
     __tablename__ = 'reservas'
-    id = db.column(db.integer, primary_key=True)
-    cliente_id = db.column(db.integer, db.foreignkey('clientes.id'))
-    hotel_id = db.column(db.integer, db.foreignkey('hoteles.id'))
-    habitacion_id = db.column(db.integer, db.foreignkey('habitaciones.id'))
-    horario_ingreso = db.column(db.Datetime, nullable=False)
-    horario_salida = db.column(db.Datetime, nullable=False)
-    precio = db.column(db.integer, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'))
+    hotel_id = db.Column(db.Integer, db.ForeignKey('hoteles.id'))
+    habitacion_id = db.Column(db.Integer, db.ForeignKey('habitaciones.id'))
+    horario_ingreso = db.Column(db.DateTime, nullable=False)
+    horario_salida = db.Column(db.DateTime, nullable=False)
+    precio = db.Column(db.Integer, nullable=False)
