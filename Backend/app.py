@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 @app.route('/')
 def hello_world():
-    return 'Hello world!'
+    return 'Hola mundo!'
 
 if __name__ == '__main__':
     print('arrancando')
