@@ -1,6 +1,7 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 class Cliente(db.Model):
@@ -41,3 +42,4 @@ class Reserva(db.Model):
     horario_ingreso = db.Column(db.DateTime, nullable=False)
     horario_salida = db.Column(db.DateTime, nullable=False)
     precio = db.Column(db.Integer, nullable=False)
+
