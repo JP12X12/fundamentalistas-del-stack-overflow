@@ -13,22 +13,22 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 def Hello_world():
     return 'Hola que tal'
 
-@app.route('/hoteles/', methods=["GET"])
-def hoteles():
+@app.route('/clientees/', methods=["GET"])
+def clientees():
     try:
-        hoteles = Hotel.query.all()
-        hoteles_data = []
-        for hotel in hoteles:
-            hotel_data = {
-                'id': hotel.id,
-                'nombre': hotel.nombre,
-                'estrellas': hotel.estrellas,
-                'pisos': hotel.pisos
+        clientees = cliente.query.all()
+        clientes_data = []
+        for cliente in clientees:
+            cliente_data = {
+                'id': cliente.id,
+                'nombre': cliente.nombre,
+                'estrellas': cliente.estrellas,
+                'pisos': cliente.pisos
             }
-            hoteles_data.append(hotel_data)
-        return jsonify(hoteles_data)
+            clientes_data.append(cliente_data)
+        return jsonify(clientes_data)
     except:
-        return jsonify({"mensaje": "No hay hoteles"})
+        return jsonify({"mensaje": "No hay clientees"})
 
 
 
@@ -61,21 +61,24 @@ def registrar_cliente():
 
     return jsonify({'mensaje': 'Cliente registrado con éxito'})
 
-
-@app.route('/ver_clientes', methods=['GET'])
-def ver_clientes():
-    clientes = Cliente.query.all()
-    clientes_lista = [
-        {
-            'nombre': cliente.nombre,
-            'apellido': cliente.apellido,
-            'DNI': cliente.DNI,
-            'telefono': cliente.telefono,
-            'cant_dias': cliente.cant_dias,
-            'edad': cliente.edad
-        } for cliente in clientes
-    ]
-    return jsonify(clientes_lista)
+@app.route('/clientes/', methods=["GET"])
+def clientes():
+    try:
+        clientes = Cliente.query.all()
+        clientes_data = []
+        for cliente in clientes:
+            cliente_data = {
+                'nombre': cliente.nombre,
+                'apellido': cliente.apellido,
+                'DNI': cliente.DNI,
+                'telefono': cliente.telefono,
+                'cant_dias': cliente.cant_dias,
+                'edad': cliente.edad
+            }
+            clientes_data.append(cliente_data)
+        return jsonify(clientes_data)
+    except:
+        return jsonify({"mensaje": "No hay clientees"})
 
 
 if __name__ == '__main__':
