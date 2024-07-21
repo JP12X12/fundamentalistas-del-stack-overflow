@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Habitacion</title>
+    <link rel="stylesheet" href="estilo-reservas.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">inicio</a></li>
+                <li><a href="/clientes">Clientes</a></li>
+                <li><a href="/hoteles">Hoteles</a></li>
+                <li><a href="/reservas">Reservas</a></li>
+                <li><a href="/huespedes">Huéspedes</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Reservar Hotel</h2>
+        <form action="/reservar_hotel" method="POST">
+            <label for="cliente">Cliente:</label>
+            <input type="text" id="cliente" name="cliente" required>
+            
+            <label for="hotel">Hotel:</label>
+            <input type="text" id="hotel" name="hotel" required>
+            
+            <!-- Esto lo tenemos que conectar con nusetro listado de hoteles-->
+            <label for="habitacion">Habitación:</label>
+            <input type="text" id="habitacion" name="habitacion" required>
+            
+            <label for="hora_ingreso">Horario de Ingreso:</label>
+            <select id="hora_ingreso" name="hora_ingreso" required>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+                <option value="21:00">21:00</option>
+                <option value="22:00">22:00</option>
+                <option value="23:00">23:00</option>
+            </select>
+            
+            <button type="submit">Reservar</button>
+        </form>
+    </div>
+</body>
+</html>
