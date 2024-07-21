@@ -19,32 +19,63 @@
         </nav>
     </header>
     <main>
-        <div class="container">
-            <h2>Registrar Cliente</h2>
-            <form action="http://0.0.0.0:5000/registrar_cliente" method="POST">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                
-                <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" name="apellido" required>
-                
-                <label for="DNI">DNI:</label>
-                <input type="number" id="DNI" name="DNI" required>
-                
-                <label for="telefono">Teléfono:</label>
-                <input type="number" id="telefono" name="telefono" required>
-                
-                <label for="cant_dias">Cantidad de Días:</label>
-                <input type="number" id="cant_dias" name="cant_dias" required>
-                
-                <label for="edad">Edad:</label>
-                <input type="number" id="edad" name="edad" required>
-                
-                <button type="submit">Registrar</button>
-            </form>
+        <div>
+            <div class="container">
+                <h2>Registrar Cliente</h2>
+                <form action="http://0.0.0.0:5000/registrar_cliente" method="POST">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                    
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" required>
+                    
+                    <label for="DNI">DNI:</label>
+                    <input type="number" id="DNI" name="DNI" required>
+                    
+                    <label for="telefono">Teléfono:</label>
+                    <input type="number" id="telefono" name="telefono" required>
+                    
+                    <label for="cant_dias">Cantidad de Días:</label>
+                    <input type="number" id="cant_dias" name="cant_dias" required>
+                    
+                    <label for="edad">Edad:</label>
+                    <input type="number" id="edad" name="edad" required>
+                    
+                    <button type="submit">Registrar</button>
+                </form>
+            </div >
+            <div class="box__text" id="lista">
+            <h1> Listado de clientes</h1>
+            <div id="clientes">
+
+            </div>
+        </div>
         </div>
     </main>
+    
     <script src="static/js/scripts.js"></script>
+    <script>
+        function response_received(response) {
+            return response.json()
+        }
+        function parse_data(content) {
+            const container = document.getElementById("clientes");
+            for(let index = 0; index < content.length; index++) {
+                const item = document.createElement("p");
+                item.innerText = `DNI: ${content[index].DNI} - Apellido y nombre: ${content[index].apellido}, ${content[index].nombre} - edad: ${content[index].edad} - Cant. dias: ${content[index].cant_dias} - telefono: ${content[index].telefono}`;
+                container.append(item);
+            }
+        }
+        function request_error(error) {
+            console.log("ERROR");
+            console.log(error);
+        }
+        fetch("http://localhost:5000/clientes")
+        .then(response_received)
+        .then(parse_data)
+        .catch(request_error)
+    </script>
+    
 
 </body>
 </html>
