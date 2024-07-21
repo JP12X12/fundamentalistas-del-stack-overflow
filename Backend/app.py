@@ -60,6 +60,41 @@ def clientes():
         return jsonify(clientes_data)
     except:
         return jsonify({"mensaje": "No hay clientees"})
+    
+@app.route('/hoteles/', methods=["GET"])
+def get_hoteles():
+    try:
+        hoteles = Hotel.query.all()
+        hoteles_data = []
+        for hotel in hoteles:
+            hotel_data = {
+                'id': hotel.id,
+                'nombre': hotel.nombre,
+            }
+            hoteles_data.append(hotel_data)
+        return jsonify(hoteles_data)
+    except Exception as e:
+        return jsonify({"mensaje": str(e)})
+
+@app.route('/habitaciones_disponibles/<int:hotel_id>', methods=["GET"])
+def get_habitaciones_disponibles(hotel_id):
+    try:
+        habitaciones = Habitacion.query.filter_by(hotel_id=hotel_id, estado=False).all()
+        habitaciones_data = []
+        for habitacion in habitaciones:
+            habitacion_data = {
+                'id': habitacion.id,
+                'numero': habitacion.numero
+            }
+            habitaciones_data.append(habitacion_data)
+        return jsonify(habitaciones_data)
+    except Exception as e:
+        return jsonify({"mensaje": str(e)})
+
+
+
+
+
 
 
 if __name__ == '__main__':
