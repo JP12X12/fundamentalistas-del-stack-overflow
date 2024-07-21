@@ -13,26 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 def Hello_world():
     return 'Hola que tal'
 
-@app.route('/clientees/', methods=["GET"])
-def clientees():
-    try:
-        clientees = cliente.query.all()
-        clientes_data = []
-        for cliente in clientees:
-            cliente_data = {
-                'id': cliente.id,
-                'nombre': cliente.nombre,
-                'estrellas': cliente.estrellas,
-                'pisos': cliente.pisos
-            }
-            clientes_data.append(cliente_data)
-        return jsonify(clientes_data)
-    except:
-        return jsonify({"mensaje": "No hay clientees"})
-
-
-
-@app.route('/registrar_cliente', methods=['POST'])
+@app.route('/registrar_cliente', methods=["POST"])
 def registrar_cliente():
     print(request.form['nombre'])
     print(request.form['apellido'])
