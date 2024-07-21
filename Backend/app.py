@@ -6,11 +6,11 @@ app = Flask(__name__)
 CORS(app)
 
 port = 5000
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://fundamentalistas:fundamentalistas@localhost:5000/intro'
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://fundamentalistas:fundamentalistas@localhost:5432/intro'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 @app.route('/')
-def Home():
+def Hello_world():
     return 'Hola que tal'
 
 if __name__ == '__main__':
@@ -44,8 +44,3 @@ def registrar_cliente():
     db.session.commit()
 
     return jsonify({'mensaje': 'Cliente registrado con éxito'})
-
-fetch("http://localhost:5000)
-    .then(response_received)
-    .then(parse_data)
-    .catch(request_error);
