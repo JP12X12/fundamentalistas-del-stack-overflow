@@ -26,19 +26,21 @@
             <input type="text" id="cliente" name="cliente" required>
             
             <label for="hotel">Hotel:</label>
-            <input type="text" id="hotel" name="hotel" required>
+            <select id="hotel" name="hotel" required>
+                <option value="">Seleccione un hotel</option>
+            </select>
             
-            <!-- Esto lo tenemos que conectar con nusetro listado de hoteles-->
             <label for="habitacion">Habitación:</label>
-            <input type="text" id="habitacion" name="habitacion" required>
+            <select id="habitacion" name="habitacion" required>
+                <option value="">Seleccione una habitación</option>
+            </select>
+
             <label for="hora_ingreso">Horario de Ingreso:</label>
             <input type="time" id="hora_ingreso" name="hora_ingreso" required>
 
-            
-            </select>
-            
             <button type="submit">Reservar</button>
         </form>
     </div>
+    <script src="scripts.js"></script>
 </body>
 </html>
