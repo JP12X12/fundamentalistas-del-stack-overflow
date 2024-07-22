@@ -7,20 +7,9 @@
     <link rel="stylesheet" href="estilo-reservas.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">inicio</a></li>
-                <li><a href="/clientes">Clientes</a></li>
-                <li><a href="/tabla">tabla</a></li>
-                <li><a href="/reservas">Reservas</a></li>
-                <li><a href="/huespedes">Huéspedes</a></li>
-            </ul>
-        </nav>
-    </header>
     <div class="container">
         <h2>Reservar Hotel</h2>
-        <form action="http://localhost:5000/crear_reservas" method="POST">
+        <form action="http://localhost:5000/huespedes/edit/<id>" method="POST">
             <label for="cliente">Cliente:</label>
             <select  id="cliente" name="cliente" required></select>
             
@@ -32,13 +21,13 @@
             
             <label for="cant_dias">Cantidad de Días:</label>
             <input type="number" id="cant_dias" name="cant_dias" required>
-            
             <label for="precio_habitacion">precio_habitacion:</label>
             <input type="number" id="precio_habitacion" name="precio_habitacion"" required>
-            
             <label for="fecha_hora_ingreso">Fecha y Hora de Ingreso:</label>
             <input type="datetime-local" id="fecha_hora_ingreso" name="fecha_hora_ingreso" required>
-        
+            
+
+            
             <button type="submit">Reservar</button>
         </form>
     </div>

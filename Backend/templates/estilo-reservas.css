@@ -4,6 +4,8 @@ body, html {
     width: 100%;
     height: 100%;
     font-family: Arial, sans-serif;
+    background: url('1.png') no-repeat center center;
+    background-size: cover;
 }
 
 header {
@@ -39,7 +41,7 @@ nav ul li a:hover {
 }
 
 main {
-    padding-top: 60px; /* To offset the fixed header */
+    padding-top: 60px;
 }
 
 .carousel {
@@ -67,6 +69,7 @@ main {
     66.66% { transform: translateX(-200%); }
     100% { transform: translateX(0%); }
 }
+
 body {
     font-family: Arial, sans-serif;
     background-color: #1f1c1a;
@@ -78,32 +81,34 @@ body {
 }
 
 .container {
-    color:rgb(221, 102, 4);
+    color: rgb(221, 102, 4);
     background-color: #070505;
-    padding: 70px;
+    padding: 40px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(253, 250, 250, 0.1);
-    width: 300px;
+    width: 400px;
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 70px;
+    margin-bottom: 20px;
 }
 
 label {
-    color:rgb(221, 102, 4);
+    color: rgb(221, 102, 4);
     display: block;
     margin-bottom: 5px;
 }
 
-input {
+input, select {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
     border: 1px solid #000000;
     border-radius: 14px;
     box-sizing: border-box;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 button {
@@ -119,28 +124,4 @@ button {
 
 button:hover {
     background-color: #45a049;
-}
-
-.box__text {
-    color: rgb(221, 102, 4);
-    background-color: #070505;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(253, 250, 250, 0.1);
-    width: 300px;
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-.box__text h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: rgb(221, 102, 4);
-}
-
-.box__text p {
-    margin-bottom: 10px;
-    padding: 5px;
-    background-color: #1f1c1a;
-    border-radius: 4px;
 }

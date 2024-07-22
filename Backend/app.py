@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from models import db, Cliente, Habitacion, Hotel, Reserva
 from flask_cors import CORS
-from datetime import timedelta
+from datetime import timedelta, datetime
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
@@ -41,18 +41,18 @@ def registrar_cliente():
 
 
 
-@app.route('/clientes/', methods=["GET"])
+@app.route('/tabla/', methods=["GET"])
 def clientes():
     try:
         clientes = Cliente.query.all()
         clientes_data = []
         for cliente in clientes:
             cliente_data = {
+                'id': cliente.id,
                 'nombre': cliente.nombre,
                 'apellido': cliente.apellido,
                 'DNI': cliente.DNI,
                 'telefono': cliente.telefono,
-                'cant_dias': cliente.cant_dias,
                 'edad': cliente.edad
             }
             clientes_data.append(cliente_data)
@@ -77,13 +77,12 @@ def listaclientes():
         return jsonify({"mensaje": str(e)})
 
 
-
-
-
-
-
-
-
+@app.route('/tabla/delete/<id>')
+def delete_cliente(id):
+    huesped = Cliente.query.get(id)
+    db.session.delete(huesped)
+    db.session.commit()
+    return 'huesped borrado'
 
 @app.route('/hoteles/', methods=["GET"])
 def get_hoteles():
@@ -141,15 +140,16 @@ def registrar_reservas():
 
     cliente_id = request.form['cliente']
     hotel_id = request.form['hotel']
-    Habitacion_id = request.form['habitacion']
+    habitacion_id = request.form['habitacion']
     cant_dias= int(request.form['cant_dias'])
-    horario_ingreso = request.form['fecha_hora_ingreso']
-    precio_habitacion=request.form['precio_habitacion']
+    horario_ingreso_str = request.form['fecha_hora_ingreso']
+    precio_habitacion= int(request.form['precio_habitacion'])
+    horario_ingreso = datetime.strptime(horario_ingreso_str, "%Y-%m-%dT%H:%M")
     
     nueva_reserva = Reserva(
         cliente_id=cliente_id,
         hotel_id=hotel_id,
-        Habitacion_id=Habitacion_id,
+        habitacion_id=habitacion_id,
         cant_dias=cant_dias,
         horario_ingreso=horario_ingreso,
         horario_salida= horario_ingreso + timedelta(days=cant_dias) - timedelta(hours=4),
@@ -161,6 +161,34 @@ def registrar_reservas():
     db.session.commit()
 
     return jsonify({'mensaje': 'reserva con exito '})
+
+@app.route('/huespedes/', methods=["GET"])
+def huespedes():
+    try:
+        huespedes = Reserva.query.all()
+        huespedes_data = []
+        for huesped in huespedes:
+            huesped_data = {
+                'id': huesped.id,
+                'cliente_id': huesped.cliente_id,
+                'hotel_id': huesped.hotel_id,
+                'habitacion_id': huesped.habitacion_id,
+                'ingreso': huesped.horario_ingreso,
+                'salida': huesped.horario_salida,
+                'precio': huesped.precio
+            }
+            huespedes_data.append(huesped_data)
+        return jsonify(huespedes_data)
+    except:
+        return jsonify({"mensaje": "No hay huespedes papa"})
+
+
+@app.route('/huespedes/delete/<id>')
+def delete(id):
+    huesped = Reserva.query.get(id)
+    db.session.delete(huesped)
+    db.session.commit()
+    return 'huesped borrado'
 
 
 

@@ -38,32 +38,9 @@ nav ul li a:hover {
     background-color: #555;
 }
 
-main {
-    padding-top: 60px; /* To offset the fixed header */
+.table th {
+    color:rgb(221, 102, 4);
 }
-
-.carousel {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.slides {
-    display: flex;
-    width: 300%;
-    animation: slide 90s infinite;
-}
-
-.slides img {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-}
-
-@keyframes slide {
-    0% { transform: translateX(0%); }
-    33.33% { transform: translateX(-100%); }
-    66.66% { transform: translateX(-200%); }
-    100% { transform: translateX(0%); }
+.table td {
+    color:rgb(221, 102, 4);
 }

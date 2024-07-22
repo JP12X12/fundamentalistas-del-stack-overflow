@@ -4,6 +4,7 @@ body, html {
     width: 100%;
     height: 100%;
     font-family: Arial, sans-serif;
+    background-color: #333;
 }
 
 header {
@@ -39,31 +40,43 @@ nav ul li a:hover {
 }
 
 main {
-    padding-top: 60px; /* To offset the fixed header */
+    padding-top: 20px; 
 }
 
 .carousel {
     position: relative;
     width: 100%;
-    height: 100vh;
+    max-width: 1920px;
+    margin: auto;
     overflow: hidden;
+    height: 1080px;
 }
 
-.slides {
+.carousel-images {
     display: flex;
-    width: 300%;
-    animation: slide 90s infinite;
+    transition: transform 0.5s ease-in-out;
 }
 
-.slides img {
+.carousel-images img {
     width: 100%;
-    height: 100vh;
-    object-fit: cover;
+    min-width: 100%;
 }
 
-@keyframes slide {
-    0% { transform: translateX(0%); }
-    33.33% { transform: translateX(-100%); }
-    66.66% { transform: translateX(-200%); }
-    100% { transform: translateX(0%); }
+button.prev, button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.568);
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button.prev {
+    left: 10px;
+}
+
+button.next {
+    right: 10px;
 }
