@@ -120,3 +120,27 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+.box__text {
+    color: rgb(221, 102, 4);
+    background-color: #070505;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(253, 250, 250, 0.1);
+    width: 300px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.box__text h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: rgb(221, 102, 4);
+}
+
+.box__text p {
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #1f1c1a;
+    border-radius: 4px;
+}
