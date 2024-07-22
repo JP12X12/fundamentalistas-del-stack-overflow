@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from models import db, Cliente, Habitacion, Hotel, Reserva
 from flask_cors import CORS
-
+from datetime import timedelta
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
@@ -13,19 +13,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 def Hello_world():
     return 'Hola que tal'
 
+
+
+
 @app.route('/registrar_cliente', methods=["POST"])
 def registrar_cliente():
-    print(request.form['nombre'])
-    print(request.form['apellido'])
-    print(request.form['DNI'])
-    print(request.form['telefono'])
-    print(request.form['cant_dias'])
-    print(request.form['edad'])
+
     nombre = request.form['nombre']
     apellido = request.form['apellido']
     dni = request.form['DNI']
     telefono = request.form['telefono']
-    cant_dias = request.form['cant_dias']
     edad = request.form['edad']
 
     nuevo_cliente = Cliente(
@@ -33,7 +30,6 @@ def registrar_cliente():
         apellido=apellido,
         DNI=dni,
         telefono=telefono,
-        cant_dias=cant_dias,
         edad=edad
     )
 
@@ -41,6 +37,9 @@ def registrar_cliente():
     db.session.commit()
 
     return jsonify({'mensaje': 'Cliente registrado con éxito'})
+
+
+
 
 @app.route('/clientes/', methods=["GET"])
 def clientes():
@@ -101,10 +100,10 @@ def get_hoteles():
     except Exception as e:
         return jsonify({"mensaje": str(e)})
 
-@app.route('/habitaciones_disponibles/<int:cliente_id>', methods=["GET"])
-def get_habitaciones_disponibles(cliente_id):
+@app.route('/habitaciones_disponibles/<int:hotel_id>', methods=["GET"])
+def get_habitaciones_disponibles(hotel_id):
     try:
-        habitaciones = Habitacion.query.filter_by(cliente_id=cliente_id, estado=False).all()
+        habitaciones = Habitacion.query.filter_by(hotel_id=hotel_id, estado=False).all()
         habitaciones_data = []
         for habitacion in habitaciones:
             habitacion_data = {
@@ -118,9 +117,50 @@ def get_habitaciones_disponibles(cliente_id):
     except Exception as e:
         return jsonify({"mensaje": str(e)})
 
+@app.route('/precio_habitacion/<int:habitacion_id>', methods=["GET"])
+def get_precio_habitacion(habitacion_id):
+    try:
+        habitacion = Habitacion.query.filter_by(id=habitacion_id).first()
+        if habitacion:
+            habitacion_data = {
+                'id': habitacion.id,
+                'precio': habitacion.precio_dia
+            }
+            return jsonify(habitacion_data)
+        else:
+            return jsonify({"mensaje": "Habitación no encontrada"}), 404
+    except Exception as e:
+        return jsonify({"mensaje": str(e)}), 500
 
 
 
+
+
+@app.route('/crear_reservas/', methods=["POST"])
+def registrar_reservas():
+
+    cliente_id = request.form['cliente']
+    hotel_id = request.form['hotel']
+    Habitacion_id = request.form['habitacion']
+    cant_dias= int(request.form['cant_dias'])
+    horario_ingreso = request.form['fecha_hora_ingreso']
+    precio_habitacion=request.form['precio_habitacion']
+    
+    nueva_reserva = Reserva(
+        cliente_id=cliente_id,
+        hotel_id=hotel_id,
+        Habitacion_id=Habitacion_id,
+        cant_dias=cant_dias,
+        horario_ingreso=horario_ingreso,
+        horario_salida= horario_ingreso + timedelta(days=cant_dias) - timedelta(hours=4),
+        precio=cant_dias * precio_habitacion,
+        
+    )
+
+    db.session.add(nueva_reserva)
+    db.session.commit()
+
+    return jsonify({'mensaje': 'reserva con exito '})
 
 
 
