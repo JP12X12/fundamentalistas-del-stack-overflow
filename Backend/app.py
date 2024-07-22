@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for, redirect
 from models import db, Cliente, Habitacion, Hotel, Reserva
 from flask_cors import CORS
 from datetime import timedelta, datetime
@@ -189,6 +189,26 @@ def delete(id):
     db.session.delete(huesped)
     db.session.commit()
     return 'huesped borrado'
+
+
+@app.route('/update/<id>', methods = ['POST', 'GET'])
+def update(id):
+    if request.method == 'POST':
+        cliente = Cliente.query.get(id)
+        cliente.nombre = request.form["nombre"]
+        cliente.apellido = request.form["apellido"]
+        cliente.DNI = request.form["DNI"]
+        cliente.telefono = request.form["telefono"]
+        cliente.edad = request.form["edad"]
+        
+        db.session.commit()
+        return 'editado ;)'
+        
+    cliente = Cliente.query.get(id)
+    return render_template('update.html', cliente=cliente)
+
+
+
 
 
 
