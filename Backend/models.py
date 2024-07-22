@@ -11,7 +11,6 @@ class Cliente(db.Model):
     apellido = db.Column(db.String(50), nullable=False)
     DNI = db.Column(db.Integer, nullable=False)
     telefono = db.Column(db.Integer, nullable=False)
-    cant_dias = db.Column(db.Integer, nullable=False)
     edad = db.Column(db.Integer, nullable=False)
 
 class Hotel(db.Model):
@@ -39,7 +38,7 @@ class Reserva(db.Model):
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'))
     hotel_id = db.Column(db.Integer, db.ForeignKey('hoteles.id'))
     habitacion_id = db.Column(db.Integer, db.ForeignKey('habitaciones.id'))
-    
+    cant_dias = db.Column(db.Integer, nullable=False)
     horario_ingreso = db.Column(db.DateTime, nullable=False)
     horario_salida = db.Column(db.DateTime, nullable=False)
     precio = db.Column(db.Integer, nullable=False)
