@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="estilo-reservas.css">
 </head>
 <body>
-
     <header>
         <nav>
             <ul>
@@ -23,21 +22,19 @@
         <h2>Reservar Hotel</h2>
         <form action="/reservar_hotel" method="POST">
             <label for="cliente">Cliente:</label>
-            <input type="text" id="cliente" name="cliente" required>
+            <select  id="cliente" name="cliente" required></select>
             
             <label for="hotel">Hotel:</label>
-            <select id="hotel" name="hotel" required>
-                <option value="">Seleccione un hotel</option>
-            </select>
+            <select id="hotel" name="hotel" required></select>
             
             <label for="habitacion">Habitación:</label>
-            <select id="habitacion" name="habitacion" required>
-                <option value="">Seleccione una habitación</option>
-            </select>
+            <select id="habitacion" name="habitacion" required></select>
+            
+            <label for="fecha_hora_ingreso">Fecha y Hora de Ingreso:</label>
+            <input type="datetime-local" id="fecha_hora_ingreso" name="fecha_hora_ingreso" required>
+            
 
-            <label for="hora_ingreso">Horario de Ingreso:</label>
-            <input type="time" id="hora_ingreso" name="hora_ingreso" required>
-
+            
             <button type="submit">Reservar</button>
         </form>
     </div>
