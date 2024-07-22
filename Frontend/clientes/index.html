@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link rel="stylesheet" href="clientes.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">inicio</a></li>
+                <li><a href="/clientes">Clientes</a></li>
+                <li><a href="/tabla">Lista Clientes</a></li>
+                <li><a href="/reservas">Reservas</a></li>
+                <li><a href="/huespedes">Huéspedes</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div>
+        <main>
+            <div>
+                <div class="container">
+                    <h2>Registrar Cliente</h2>
+                    <form action="http://localhost:5000/registrar_cliente" method="POST">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                        
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" required>
+                        
+                        <label for="DNI">DNI:</label>
+                        <input type="number" id="DNI" name="DNI" required>
+                        
+                        <label for="telefono">Teléfono:</label>
+                        <input type="number" id="telefono" name="telefono" required>
+                        
+                        <label for="edad">Edad:</label>
+                        <input type="number" id="edad" name="edad" required>
+                        
+                        <button type="submit">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="static/js/scripts.js"></script>
+    <script>
+        function response_received(response) {
+            return response.json()
+        }
+        function parse_data(content) {
+            const container = document.getElementById("clientes");
+            for(let index = 0; index < content.length; index++) {
+                const item = document.createElement("p");
+                item.innerText = `DNI: ${content[index].DNI} - Apellido y nombre: ${content[index].apellido}, ${content[index].nombre} - edad: ${content[index].edad} - Cant. dias: ${content[index].cant_dias} - telefono: ${content[index].telefono}`;
+                container.append(item);
+            }
+        }
+        function request_error(error) {
+            console.log("ERROR");
+            console.log(error);
+        }
+        fetch("http://localhost:5000/clientes")
+        .then(response_received)
+        .then(parse_data)
+        .catch(request_error)
+    </script>
+    
+
+</body>
+</html>
