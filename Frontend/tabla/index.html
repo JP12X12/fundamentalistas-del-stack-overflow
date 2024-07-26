@@ -51,6 +51,7 @@
 
         function parse_data(content) {
             const container = document.getElementById("clientes");
+            content.sort((a,b) => a.DNI - b.DNI); <!--Con esto se ordena por DNI-->
             content.forEach(item => {
                 const row = document.createElement("tr");
                 row.setAttribute('data-id', item.id);
