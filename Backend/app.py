@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify, render_template, url_for, redirect
+from flask import Flask, request, jsonify, render_template, flash, redirect, url_for
 from models import db, Cliente, Habitacion, Hotel, Reserva
 from flask_cors import CORS
 from datetime import timedelta, datetime
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+app.config['SECRET_KEY'] = 'si tu me llamas'
 
 port = 5000
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://fundamentalistas:fundamentalistas@localhost:5432/intro'
@@ -36,7 +37,7 @@ def registrar_cliente():
     db.session.add(nuevo_cliente)
     db.session.commit()
 
-    return jsonify({'mensaje': 'Cliente registrado con éxito'})
+    return redirect("http:localhost:8000/tabla/")
 
 
 
@@ -59,7 +60,34 @@ def clientes():
         return jsonify(clientes_data)
     except:
         return jsonify({"mensaje": "No hay clientees"})
-    
+
+
+@app.route('/tabla/delete/<id>')
+def delete_cliente(id):
+    huesped = Cliente.query.get(id)
+    db.session.delete(huesped)
+    db.session.commit()
+    flash('cliente deleteado!')
+    return redirect("http:localhost:8000/tabla/")
+   
+
+@app.route('/update/<id>', methods = ['POST', 'GET'])
+def update(id):
+    if request.method == 'POST':
+        cliente = Cliente.query.get(id)
+        cliente.nombre = request.form["nombre"]
+        cliente.apellido = request.form["apellido"]
+        cliente.DNI = request.form["DNI"]
+        cliente.telefono = request.form["telefono"]
+        cliente.edad = request.form["edad"]
+        
+        db.session.commit()
+        return redirect("http:localhost:8000/tabla/")
+        
+    cliente = Cliente.query.get(id)
+    return render_template('update.html', cliente=cliente)
+
+
 @app.route('/lista-clientes/', methods=["GET"])
 def listaclientes():
     try:
@@ -74,15 +102,8 @@ def listaclientes():
             clientes_data.append(cliente_data)
         return jsonify(clientes_data)
     except Exception as e:
-        return jsonify({"mensaje": str(e)})
+        return jsonify({"mensaje": "no hay clientes"})
 
-
-@app.route('/tabla/delete/<id>')
-def delete_cliente(id):
-    huesped = Cliente.query.get(id)
-    db.session.delete(huesped)
-    db.session.commit()
-    return 'huesped borrado'
 
 @app.route('/hoteles/', methods=["GET"])
 def get_hoteles():
@@ -97,7 +118,7 @@ def get_hoteles():
             hoteles_data.append(hotel_data)
         return jsonify(hoteles_data)
     except Exception as e:
-        return jsonify({"mensaje": str(e)})
+        return jsonify({"mensaje": "no hay hoteles"})
 
 @app.route('/habitaciones_disponibles/<int:hotel_id>', methods=["GET"])
 def get_habitaciones_disponibles(hotel_id):
@@ -114,7 +135,7 @@ def get_habitaciones_disponibles(hotel_id):
             habitaciones_data.append(habitacion_data)
         return jsonify(habitaciones_data)
     except Exception as e:
-        return jsonify({"mensaje": str(e)})
+        return jsonify({"mensaje": "no hay habitaciones disponibles"})
 
 @app.route('/precio_habitacion/<int:habitacion_id>', methods=["GET"])
 def get_precio_habitacion(habitacion_id):
@@ -160,7 +181,7 @@ def registrar_reservas():
     db.session.add(nueva_reserva)
     db.session.commit()
 
-    return jsonify({'mensaje': 'reserva con exito '})
+    return redirect("http:localhost:8000/huespedes/")
 
 @app.route('/huespedes/', methods=["GET"])
 def huespedes():
@@ -188,28 +209,7 @@ def delete(id):
     huesped = Reserva.query.get(id)
     db.session.delete(huesped)
     db.session.commit()
-    return 'huesped borrado'
-
-
-@app.route('/update/<id>', methods = ['POST', 'GET'])
-def update(id):
-    if request.method == 'POST':
-        cliente = Cliente.query.get(id)
-        cliente.nombre = request.form["nombre"]
-        cliente.apellido = request.form["apellido"]
-        cliente.DNI = request.form["DNI"]
-        cliente.telefono = request.form["telefono"]
-        cliente.edad = request.form["edad"]
-        
-        db.session.commit()
-        return 'editado ;)'
-        
-    cliente = Cliente.query.get(id)
-    return render_template('update.html', cliente=cliente)
-
-
-
-
+    return redirect("http:localhost:8000/huespedes/")
 
 
 if __name__ == '__main__':
