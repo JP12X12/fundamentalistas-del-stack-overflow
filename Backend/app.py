@@ -15,8 +15,6 @@ def Hello_world():
     return 'Hola que tal'
 
 
-
-
 @app.route('/registrar_cliente', methods=["POST"])
 def registrar_cliente():
 
@@ -36,9 +34,12 @@ def registrar_cliente():
 
     db.session.add(nuevo_cliente)
     db.session.commit()
+<<<<<<< HEAD
     return redirect("http://localhost:8000/tabla/")
+=======
+    return redirect("http:localhost:8000/tabla/")
 
-
+>>>>>>> bcfc60222808ebe39cf2944da909baaa328c81ff
 
 @app.route('/tabla/', methods=["GET"])
 def clientes():
@@ -149,38 +150,55 @@ def get_precio_habitacion(habitacion_id):
         else:
             return jsonify({"mensaje": "Habitación no encontrada"}), 404
     except Exception as e:
-        return jsonify({"mensaje": str(e)}), 500
+        return jsonify({"mensaje": "ERROR"}), 500
 
-
-
+@app.route('/crear_reservas/ocupada/', methods=["GET"])
+def ocupada():
+    return 'ERROR: Habitacion ocupada'
 
 
 @app.route('/crear_reservas/', methods=["POST"])
 def registrar_reservas():
-
-    cliente_id = request.form['cliente']
-    hotel_id = request.form['hotel']
-    habitacion_id = request.form['habitacion']
-    cant_dias= int(request.form['cant_dias'])
-    horario_ingreso_str = request.form['fecha_hora_ingreso']
-    precio_habitacion= int(request.form['precio_habitacion'])
-    horario_ingreso = datetime.strptime(horario_ingreso_str, "%Y-%m-%dT%H:%M")
-    
-    nueva_reserva = Reserva(
-        cliente_id=cliente_id,
-        hotel_id=hotel_id,
-        habitacion_id=habitacion_id,
-        cant_dias=cant_dias,
-        horario_ingreso=horario_ingreso,
-        horario_salida= horario_ingreso + timedelta(days=cant_dias) - timedelta(hours=4),
-        precio=cant_dias * precio_habitacion,
+    try:
+        cliente_id = request.form['cliente']
+        hotel_id = request.form['hotel']
+        habitacion_id = request.form['habitacion']
+        cant_dias= int(request.form['cant_dias'])
+        horario_ingreso_str = request.form['fecha_hora_ingreso']
+        precio_habitacion= int(request.form['precio_habitacion'])
+        horario_ingreso = datetime.strptime(horario_ingreso_str, "%Y-%m-%dT%H:%M")
+        horario_salida= horario_ingreso + timedelta(days=cant_dias) - timedelta(hours=4)
         
-    )
+        reservas_existentes = Reserva.query.filter(
+            Reserva.habitacion_id == habitacion_id,
+            Reserva.horario_salida > horario_ingreso,
+            Reserva.horario_ingreso < horario_salida
+        ).all()
+        
+        if reservas_existentes:
+            return redirect("http:localhost:8000/reservas/")
 
-    db.session.add(nueva_reserva)
-    db.session.commit()
 
+<<<<<<< HEAD
     return redirect("http://localhost:8000/huespedes/")
+=======
+        nueva_reserva = Reserva(
+            cliente_id=cliente_id,
+            hotel_id=hotel_id,
+            habitacion_id=habitacion_id,
+            cant_dias=cant_dias,
+            horario_ingreso=horario_ingreso,
+            horario_salida= horario_salida,
+            precio=cant_dias * precio_habitacion,
+        )
+        
+        db.session.add(nueva_reserva)
+        db.session.commit()
+        return redirect("http:localhost:8000/huespedes/")
+    except:
+        return jsonify({"mensaje": "hubo un error"})
+    
+>>>>>>> bcfc60222808ebe39cf2944da909baaa328c81ff
 
 @app.route('/huespedes/', methods=["GET"])
 def huespedes():
