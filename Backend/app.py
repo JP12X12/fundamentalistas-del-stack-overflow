@@ -34,12 +34,7 @@ def registrar_cliente():
 
     db.session.add(nuevo_cliente)
     db.session.commit()
-<<<<<<< HEAD
     return redirect("http://localhost:8000/tabla/")
-=======
-    return redirect("http:localhost:8000/tabla/")
-
->>>>>>> bcfc60222808ebe39cf2944da909baaa328c81ff
 
 @app.route('/tabla/', methods=["GET"])
 def clientes():
@@ -176,7 +171,7 @@ def registrar_reservas():
         ).all()
         
         if reservas_existentes:
-            return redirect("http:localhost:8000/reservas/")
+            return redirect("http://localhost:8000/reservas/")
 
 
         nueva_reserva = Reserva(
@@ -191,7 +186,7 @@ def registrar_reservas():
         
         db.session.add(nueva_reserva)
         db.session.commit()
-        return redirect("http:localhost:8000/huespedes/")
+        return redirect("http://localhost:8000/reservas/")
     except:
         return jsonify({"mensaje": "hubo un error"})
     
