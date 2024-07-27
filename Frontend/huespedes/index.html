@@ -56,61 +56,45 @@
 
         function parse_data(content) {
             const container = document.getElementById("reservas");
+            const ahora = addHours(new Date(), -3);
+    
+            // Asignar estados
             content.forEach(item => {
-                console.log(item);
-                const row = document.createElement("tr");
-                ahora = addHours(new Date(), -3);
                 const ingresoDate = new Date(item.ingreso);
-                const ingreso = ingresoDate.toISOString();
                 const salidaDate = new Date(item.salida);
-                const salida = salidaDate.toISOString();
-            
-                if(ahora.toISOString() < ingreso) {
-                    row.innerHTML = `
-                    <td>${item.cliente_id}</td>
-                    <td>${item.hotel_id}</td>
-                    <td>${item.habitacion_id}</td>
-                    <td>${item.ingreso}</td>
-                    <td>${item.salida}</td>
-                    <td>${item.precio}</td>
-                    <td>En espera</td>
-                    <td>
-                        <span class="button">
-                            <a class="external text" href="http://localhost:5000/huespedes/delete/${item.id}">delete</a>
-                        </span>
-                    </td>
-                `;
-                }else if(ingreso < ahora.toISOString() && salida > ahora.toISOString()) {
-                    row.innerHTML = `
-                    <td>${item.cliente_id}</td>
-                    <td>${item.hotel_id}</td>
-                    <td>${item.habitacion_id}</td>
-                    <td>${item.ingreso}</td>
-                    <td>${item.salida}</td>
-                    <td>${item.precio}</td>
-                    <td>Hospedandose</td>
-                    <td>
-                        <span class="button">
-                            <a class="external text" href="http://localhost:5000/huespedes/delete/${item.id}">delete</a>
-                        </span>
-                    </td>
-                `;
-                }else {
-                    row.innerHTML = `
-                    <td>${item.cliente_id}</td>
-                    <td>${item.hotel_id}</td>
-                    <td>${item.habitacion_id}</td>
-                    <td>${item.ingreso}</td>
-                    <td>${item.salida}</td>
-                    <td>${item.precio}</td>
-                    <td>retirado</td>
-                    <td>
-                        <span class="button">
-                            <a class="external text" href="http://localhost:5000/huespedes/delete/${item.id}">delete</a>
-                        </span>
-                    </td>
-                `;
+                
+                if (ahora < ingresoDate) {
+                    item.estado = "En espera";
+                } else if (ingresoDate < ahora && salidaDate > ahora) {
+                    item.estado = "Hospedandose";
+                } else {
+                    item.estado = "Retirado";
                 }
+            });
+    
+            // Ordenar por estado
+            content.sort((a, b) => a.estado.localeCompare(b.estado));
+            
+            content.forEach(item => {
+                const row = document.createElement("tr");
+                const ingreso = new Date(item.ingreso).toISOString();
+                const salida = new Date(item.salida).toISOString();
+                
+                row.innerHTML = `
+                    <td>${item.cliente_id}</td>
+                    <td>${item.hotel_id}</td>
+                    <td>${item.habitacion_id}</td>
+                    <td>${ingreso}</td>
+                    <td>${salida}</td>
+                    <td>${item.precio}</td>
+                    <td>${item.estado}</td>
+                    <td>
+                        <span class="button">
+                            <a class="external text" href="http://localhost:5000/huespedes/delete/${item.id}">delete</a>
+                        </span>
+                    </td>
+                `;
+                
                 container.appendChild(row);
             });
         }
