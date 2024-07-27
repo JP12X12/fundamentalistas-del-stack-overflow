@@ -15,8 +15,6 @@ def Hello_world():
     return 'Hola que tal'
 
 
-
-
 @app.route('/registrar_cliente', methods=["POST"])
 def registrar_cliente():
 
@@ -36,10 +34,7 @@ def registrar_cliente():
 
     db.session.add(nuevo_cliente)
     db.session.commit()
-
     return redirect("http:localhost:8000/tabla/")
-
-
 
 
 @app.route('/tabla/', methods=["GET"])
@@ -150,10 +145,11 @@ def get_precio_habitacion(habitacion_id):
         else:
             return jsonify({"mensaje": "Habitación no encontrada"}), 404
     except Exception as e:
-        return jsonify({"mensaje": str(e)}), 500
+        return jsonify({"mensaje": "ERROR"}), 500
 
-
-
+@app.route('/crear_reservas/ocupada/', methods=["GET"])
+def ocupada():
+    return 'ERROR: Habitacion ocupada'
 
 
 @app.route('/crear_reservas/', methods=["POST"])
@@ -175,7 +171,8 @@ def registrar_reservas():
         ).all()
         
         if reservas_existentes:
-            return jsonify({"mensaje": "Habitacion ya alquilada :("}), 404
+            return redirect("http:localhost:8000/reservas/")
+
 
         nueva_reserva = Reserva(
             cliente_id=cliente_id,
@@ -192,6 +189,7 @@ def registrar_reservas():
         return redirect("http:localhost:8000/huespedes/")
     except:
         return jsonify({"mensaje": "hubo un error"})
+    
 
 @app.route('/huespedes/', methods=["GET"])
 def huespedes():

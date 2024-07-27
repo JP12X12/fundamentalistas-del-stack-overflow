@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody id="reservas">
-                <!-- Aquí se insertarán las filas de datos -->
+                
             </tbody>
         </table>
     </div>
@@ -58,7 +58,6 @@
             const container = document.getElementById("reservas");
             const ahora = addHours(new Date(), -3);
     
-            // Asignar estados
             content.forEach(item => {
                 const ingresoDate = new Date(item.ingreso);
                 const salidaDate = new Date(item.salida);
@@ -72,7 +71,6 @@
                 }
             });
     
-            // Ordenar por estado
             content.sort((a, b) => a.estado.localeCompare(b.estado));
             
             content.forEach(item => {
