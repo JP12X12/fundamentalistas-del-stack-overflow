@@ -179,9 +179,6 @@ def registrar_reservas():
             return redirect("http:localhost:8000/reservas/")
 
 
-<<<<<<< HEAD
-    return redirect("http://localhost:8000/huespedes/")
-=======
         nueva_reserva = Reserva(
             cliente_id=cliente_id,
             hotel_id=hotel_id,
@@ -198,7 +195,6 @@ def registrar_reservas():
     except:
         return jsonify({"mensaje": "hubo un error"})
     
->>>>>>> bcfc60222808ebe39cf2944da909baaa328c81ff
 
 @app.route('/huespedes/', methods=["GET"])
 def huespedes():
