@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, flash, redirect, url_for
+from flask import Flask, request, jsonify, render_template, flash, redirect
 from models import db, Cliente, Habitacion, Hotel, Reserva
 from flask_cors import CORS
 from datetime import timedelta, datetime
@@ -36,9 +36,7 @@ def registrar_cliente():
 
     db.session.add(nuevo_cliente)
     db.session.commit()
-
-    return redirect("http:localhost:8000/tabla/")
-
+    return redirect("http://localhost:8000/tabla/")
 
 
 
@@ -68,7 +66,8 @@ def delete_cliente(id):
     db.session.delete(huesped)
     db.session.commit()
     flash('cliente deleteado!')
-    return redirect("http:localhost:8000/tabla/")
+    return redirect("http://localhost:8000/tabla/")
+
    
 
 @app.route('/update/<id>', methods = ['POST', 'GET'])
@@ -82,7 +81,7 @@ def update(id):
         cliente.edad = request.form["edad"]
         
         db.session.commit()
-        return redirect("http:localhost:8000/tabla/")
+        return redirect("http://localhost:8000/tabla/")
         
     cliente = Cliente.query.get(id)
     return render_template('update.html', cliente=cliente)
@@ -181,7 +180,7 @@ def registrar_reservas():
     db.session.add(nueva_reserva)
     db.session.commit()
 
-    return redirect("http:localhost:8000/huespedes/")
+    return redirect("http://localhost:8000/huespedes/")
 
 @app.route('/huespedes/', methods=["GET"])
 def huespedes():
@@ -209,7 +208,7 @@ def delete(id):
     huesped = Reserva.query.get(id)
     db.session.delete(huesped)
     db.session.commit()
-    return redirect("http:localhost:8000/huespedes/")
+    return redirect("http://localhost:8000/huespedes/")
 
 
 if __name__ == '__main__':

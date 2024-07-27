@@ -1,14 +1,15 @@
-body, html {
+/* clientes.css */
+
+body {
+    background-color: #121212;
+    color: #E0E0E0;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #1f1c1a; /* Fondo general */
 }
 
 header {
-    background-color: #333;
+    background-color: #1F1F1F;
     padding: 10px 0;
     position: fixed;
     width: 100%;
@@ -40,17 +41,17 @@ nav ul li a:hover {
 }
 
 main {
-    padding-top: 60px; /* To offset the fixed header */
+    padding-top: 60px;
 }
 
 .container {
-    color:rgb(221, 102, 4); /* Color de texto */
-    background-color: #070505; /* Color de fondo */
-    padding: 70px; /* Espaciado interno */
+    color: rgb(221, 102, 4);
+    background-color: #070505;
+    padding: 70px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(253, 250, 250, 0.1);
-    width: 300px; /* Ancho del contenedor */
-    margin: 0 auto; /* Centrado horizontal */
+    width: 300px;
+    margin: 0 auto;
 }
 
 h2 {
@@ -59,7 +60,7 @@ h2 {
 }
 
 label {
-    color:rgb(221, 102, 4);
+    color: rgb(221, 102, 4);
     display: block;
     margin-bottom: 5px;
 }
@@ -89,5 +90,5 @@ button:hover {
 }
 
 .table {
-    margin-left: 20px; /* Ajuste de margen izquierdo para la tabla */
+    margin-left: 20px;
 }
