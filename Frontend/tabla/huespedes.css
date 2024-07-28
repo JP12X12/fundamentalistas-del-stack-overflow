@@ -5,6 +5,8 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    background: url('./imagen3.jpg') no-repeat center center;
+    background-size: cover;
 }
 
 header {
